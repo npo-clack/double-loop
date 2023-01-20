@@ -1,10 +1,10 @@
 const tableArea = document.getElementById("table-area");
 const startButton = document.getElementById("double-loop-start");
-const kukuTable = document.createElement("table");
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 // create table
-// add class "table"
+const kukuTable = document.createElement("table");
 kukuTable.setAttribute("class", "table");
 
 // create head
@@ -14,19 +14,13 @@ const thead = document.createElement("thead");
 const trHead = document.createElement("tr");
 
 // <th>#</th>
-const th = document.createElement("th");
-th.setAttribute("scope", "col");
-th.setAttribute("id", "horizontal-#");
-th.innerText = "#";
+const th = createTh("horizontal-#", "#");
 trHead.appendChild(th);
 
 // loop
 // <th>i</th>
 for (let i=1; i<=9; i++) {
-  const th = document.createElement("th");
-  th.setAttribute("scope", "col");
-  th.setAttribute("id", "horizontal-" + String(i));
-  th.innerText = String(i);
+  const th = createTh("horizontal-" + String(i), String(i));
   trHead.appendChild(th);
 }
 thead.appendChild(trHead);
@@ -42,24 +36,17 @@ kukuTable.appendChild(thead);
 const tbody = document.createElement("tbody");
 for (let i=1; i<=9; i++) {
   const tr = document.createElement("tr");
-  const th = document.createElement("th");
-  th.setAttribute("scope", "col");
-  th.setAttribute("id", "vertical-" + String(i));
-  th.innerText = String(i);
+  const th = createTh("vertical-" + String(i), String(i));
   tr.appendChild(th);
   for (let j=1; j<=9; j++) {
-    const th = document.createElement("th");
-    th.setAttribute("scope", "row");
-    th.setAttribute("id", String(i) + "-" + String(j));
+    const th = createTh(String(i) + "-" + String(j));
     tr.appendChild(th);
-
   }
   tbody.appendChild(tr);
 }
 kukuTable.appendChild(tbody);
 
 tableArea.appendChild(kukuTable);
-
 
 
 
@@ -78,19 +65,15 @@ calculate = () => {
   console.log(String(i) + "-" + String(j));
   result.innerText = i*j;
 
-  const numberI = document.getElementById("vertical-" + String(i));
-  numberI.setAttribute("class", "bg-primary");
-  
-  const numberJ = document.getElementById("horizontal-" + String(j));
-  numberJ.setAttribute("class", "bg-primary");
+  // colorize current number 
+  document.getElementById("vertical-" + String(i)).setAttribute("class", "bg-primary");
+  document.getElementById("horizontal-" + String(j)).setAttribute("class", "bg-primary");
 
+  // decolorize previous number
   const prevJ = j == 1 ? 9 : j-1;
-  const numberPrevJ = document.getElementById("horizontal-" + String(prevJ));
-  numberPrevJ.setAttribute("class", "bg-white");
-
+  document.getElementById("horizontal-" + String(prevJ)).setAttribute("class", "bg-white");
   if (j == 1 & i != 1) {
-    const numberPrevI = document.getElementById("vertical-" + String(i-1));
-    numberPrevI.setAttribute("class", "bg-white");
+    document.getElementById("vertical-" + String(i-1)).setAttribute("class", "bg-white");
   }
   
   if (j < 9) {
@@ -99,4 +82,15 @@ calculate = () => {
     i++;
     j=1;
   }
+}
+
+
+// utility functions
+function createTh(id, innerText="") {
+  const th = document.createElement("th");
+  th.setAttribute("scope", "row");
+  th.setAttribute("class", "col-1");
+  th.innerText = innerText;
+  th.setAttribute("id", id);
+  return th
 }
