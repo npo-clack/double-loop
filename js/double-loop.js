@@ -28,7 +28,7 @@ startButton.onclick = () => {
       } else {
         clearInterval(calcId);
       }
-    }, 10);
+    }, 300);
   }
 
 
