@@ -1,5 +1,7 @@
 const tableArea = document.getElementById("table-area");
 const startButton = document.getElementById("double-loop-start");
+const iIndexArea = document.getElementById("i-index-area");
+const jIndexArea = document.getElementById("j-index-area");
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -14,7 +16,7 @@ const thead = document.createElement("thead");
 const trHead = document.createElement("tr");
 
 // <th>#</th>
-const th = createTh("horizontal-#", "#");
+const th = createTh("horizontal-#", "i \\ j");
 trHead.appendChild(th);
 
 // loop
@@ -75,6 +77,10 @@ calculate = () => {
   if (j == 1 & i != 1) {
     document.getElementById("vertical-" + String(i-1)).setAttribute("class", "bg-white");
   }
+
+  // 
+  iIndexArea.innerText = "i=" + String(i);
+  jIndexArea.innerText = "j=" + String(j);
   
   if (j < 9) {
     j++;
